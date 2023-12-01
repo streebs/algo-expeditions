@@ -3,10 +3,6 @@
 ## but, i really had fun implementing a state machine to make it work! ##
 #########################################################################
 
-
-
-
-
 import unittest
 from abc import ABC, abstractmethod
 import re
