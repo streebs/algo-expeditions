@@ -100,15 +100,15 @@ class TestPartB(unittest.TestCase):
 
 
 ############### DATA RETRIEVAL ###############
-# data = aocd.get_data(day=1, year=2023)
-# data_as_list = data.split("\n")
-        
-url = 'https://adventofcode.com/2023/day/2/input'
-cookies = {'session':'53616c7465645f5f02f46aae4bb05cb8ab6d077207b58a91998d6b6103e0b82405ecf051b5a249be678a6f0241a87c686ecd8bff6c0d6c92df8bb6d046eea358'}
-r = requests.get(url, cookies=cookies)
-data = r.text
+data = aocd.get_data(day=2, year=2023)
 data_as_list = data.split("\n")
-data_as_list = data_as_list[:-1]
+        
+# url = 'https://adventofcode.com/2023/day/2/input'
+# cookies = {'session':'53616c7465645f5f02f46aae4bb05cb8ab6d077207b58a91998d6b6103e0b82405ecf051b5a249be678a6f0241a87c686ecd8bff6c0d6c92df8bb6d046eea358'}
+# r = requests.get(url, cookies=cookies)
+# data = r.text
+# data_as_list = data.split("\n")
+# data_as_list = data_as_list[:-1]
 
 
 
@@ -117,10 +117,8 @@ def main():
         sys.argv = [sys.argv[0]] # unittest uses the system args to run so it has to be cleared :/
         unittest.main()
     else:
-        print("Part A: " + str(part_a(data_as_list)))
-        print("Part B: " + str(part_b(data_as_list)))
-    #     aocd.submit(part_a(data_as_list), part='a', day=1, year=2023)
-    #     aocd.submit(part_b(data_as_list), part='b', day=1, year=2023)
+        aocd.submit(part_a(data_as_list), part='a', day=2, year=2023)
+        aocd.submit(part_b(data_as_list), part='b', day=2, year=2023)
 
 if __name__ == "__main__":
     main()
