@@ -3,12 +3,11 @@ import unittest
 import sys
 
 def part_a(data_as_list):
-    ...
-
+    raise NotImplementedError
 
 
 def part_b(data_as_list):
-    ...
+    raise NotImplementedError
 
 
 
@@ -27,7 +26,7 @@ def main():
         unittest.main()
     else:
         aocd.submit(part_a(data_as_list), part='a', day=1, year=2023)
-        aocd.submit(part_b(data_as_list), part='b', day=1, year=2023)
+        #aocd.submit(part_b(data_as_list), part='b', day=1, year=2023)
 
 if __name__ == "__main__":
     main()
