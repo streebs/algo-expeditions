@@ -2,17 +2,21 @@ import aocd
 import unittest
 import sys
 
-def part_a(data_as_list):
+def part_a(data):
     raise NotImplementedError
 
 
-def part_b(data_as_list):
+def part_b(data):
     raise NotImplementedError
 
 
 
 ################# UNIT TESTS #################
-
+test_data = None # update test data
+class Test(unittest.TestCase):
+    def test(self):
+        self.assertEqual(part_a(test_data, 0)) # make sure to update tests
+        # self.assertEqual(part_b(test_data), 0)
 
 
 ############### DATA RETRIEVAL ###############
