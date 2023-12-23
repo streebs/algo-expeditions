@@ -48,12 +48,58 @@ def part_a(data):
 
     return sum(winScores)
 
-        
+# Part B Globals and Classes
+winTable = {}
+
+class Node():
+    pass
+
+def fillTable(data):
+    # start by creating a lookup table that takes the card number as input and returns a list of the winning cards
+    cardNum = 1
+    for card in data:
+        card = card.split(':')[1]
+        s = card.split('|')
+        myNumsAsString = s[0]
+        winNumsAsString = s[1]
+
+        myNumsAsString = myNumsAsString.strip()
+        myNumsAsList = myNumsAsString.split(' ')
+
+        winNumsAsString = winNumsAsString.strip()
+        winNumsAsList = winNumsAsString.split(' ')
+
+        for el in myNumsAsList:
+            if el == '':
+                myNumsAsList.remove('')
+
+        for el in winNumsAsList:
+            if el == '':
+                winNumsAsList.remove('')
+
+        for num in range(len(myNumsAsList)):
+            myNumsAsList[num] = int(myNumsAsList[num])
+
+        for num in range(len(winNumsAsList)):
+            winNumsAsList[num] = int(winNumsAsList[num])
+
+        myNumsSet = set(myNumsAsList)
+        WinNumsSet = set(winNumsAsList)
+
+        numWins = len(list(myNumsSet.intersection(WinNumsSet)))
+
+        winTable[cardNum] = [i for i in range(cardNum+1, cardNum + numWins + 1)]
+        cardNum += 1
 
 
 
 def part_b(data):
-    raise NotImplementedError
+    fillTable(data)
+    print(winTable)
+
+    return 0
+
+
 
 
 
@@ -69,8 +115,8 @@ test_data = [
 
 class Test(unittest.TestCase):
     def test(self):
-        self.assertEqual(part_a(test_data), 8) # make sure to update tests
-        # self.assertEqual(part_b(test_data), 0)
+        self.assertEqual(part_a(test_data), 13) # make sure to update tests
+        self.assertEqual(part_b(test_data), 0)
 
 
 ############### DATA RETRIEVAL ###############
@@ -84,7 +130,7 @@ def main():
         unittest.main()
     else:
         aocd.submit(part_a(data_as_list), part='a', day=4, year=2023)
-        #aocd.submit(part_b(data_as_list), part='b', day=1, year=2023)
+        aocd.submit(part_b(data_as_list), part='b', day=4, year=2023)
 
 if __name__ == "__main__":
     main()
