@@ -1,8 +1,33 @@
 # My Code Challenge Submissions
 
-Due to my recent discovery of Advent of Code I will now be including my soltuions to Advent of Code and 
-Leet Code problems!
+I love doing puzzles and solving problems. I also love coding! I decided to put this repository together to show off my submissions to LeetCode and Advent of Code or any other cool problems solved with code!
 
-Each file contains the solution to a LeetCode or AoC problem and some of my own test cases. 
+### Getting Started (Linux/MacOS)
+Clone repository to your machine
+```sh
+cd /home/projects
+git clone git@github.com:streebs/strebe-leet.git
+cd strebe-leet
+```
 
-On my honor, I have disabled tools such as github copilot for these solutions. It's more fun that way :)
+Set up Python virtual environment 
+```sh
+python -m venv .venv
+source .venv/bin/activate
+```
+
+Once the virtual enviroment is set up, install packages from requirements.txt
+```sh
+pip install -r requirements.txt
+```
+
+remember you can use the following to exit venv
+```sh
+deactivate
+```
+
+If you are using Windows, check this out: https://frankcorso.dev/setting-up-python-environment-venv-requirements.html
+
+### About AI
+
+With tools such as GitHub Copilot and ChatGPT, coding problems and puzzles become trivial. I will not be using any Artificial Intelligent assistants for any of the problems solved here. It is more fun this way :)
