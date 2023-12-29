@@ -1,4 +1,5 @@
 import aocd
+from abc import ABC, abstractmethod
 import unittest
 import sys
 
@@ -51,8 +52,54 @@ def part_a(data):
 # Part B Globals and Classes
 winTable = {}
 
-class Node():
-    pass
+class Node(ABC):
+    @abstractmethod
+    def accept(self, visitor):
+        pass
+
+class Root(Node):
+    def __init__(self):
+        self.cardNum = "root"
+        self.children = [CardNode(i) for i in winTable]
+    def accept(self, visitor):
+        visitor.preVisit(self)
+        for child in self.children:
+            if child is not None:
+                child.accept(visitor)
+        visitor.visit(self)
+
+class CardNode(Node):
+    def __init__(self, cardNum, children=[]):
+        self.cardNum = cardNum
+        self.children = children
+    def accept(self, visitor):
+        visitor.preVisit(self)
+        for child in self.children:
+            if child is not None:
+                child.accept(visitor)
+        visitor.visit(self)
+
+class Visitor(ABC):
+    def preVisit(self, node):
+        pass
+    def visit(self, node):
+        pass
+
+class BuildTree(Visitor):
+    def preVisit(self, node):
+        if node.cardNum == "root":
+            pass
+        else:
+            node.children = [CardNode(i) for i in winTable[node.cardNum]]
+
+class CountTree(Visitor):
+    def __init__(self):
+        self.count = 0
+    def preVisit(self, node):
+        if node.cardNum == "root":
+            pass
+        else:
+            self.count += 1
 
 def fillTable(data):
     # start by creating a lookup table that takes the card number as input and returns a list of the winning cards
@@ -94,10 +141,16 @@ def fillTable(data):
 
 
 def part_b(data):
+    # create lookup table
     fillTable(data)
-    print(winTable)
-
-    return 0
+    # build tree
+    root = Root()
+    build = BuildTree()
+    root.accept(build)
+    # count nodes and return!
+    cnt = CountTree()
+    root.accept(cnt)
+    return cnt.count
 
 
 
@@ -116,7 +169,7 @@ test_data = [
 class Test(unittest.TestCase):
     def test(self):
         self.assertEqual(part_a(test_data), 13) # make sure to update tests
-        self.assertEqual(part_b(test_data), 0)
+        self.assertEqual(part_b(test_data), 30)
 
 
 ############### DATA RETRIEVAL ###############
