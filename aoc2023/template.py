@@ -2,6 +2,10 @@ import aocd
 import unittest
 import sys
 
+# UPDATE DAY for 
+DAY = 0
+
+
 def part_a(data):
     raise NotImplementedError
 
@@ -15,8 +19,8 @@ def part_b(data):
 test_data = None # update test data
 class Test(unittest.TestCase):
     def test(self):
-        self.assertEqual(part_a(test_data, 0)) # make sure to update tests
-        # self.assertEqual(part_b(test_data), 0)
+        self.assertEqual(part_a(test_data), 0)
+        self.assertEqual(part_b(test_data), 0)
 
 
 ############### DATA RETRIEVAL ###############
@@ -29,8 +33,8 @@ def main():
         sys.argv = [sys.argv[0]] # unittest uses the system args to run so it has to be cleared :/
         unittest.main()
     else:
-        aocd.submit(part_a(data_as_list), part='a', day=1, year=2023)
-        #aocd.submit(part_b(data_as_list), part='b', day=1, year=2023)
+        aocd.submit(part_a(data_as_list), part='a', day=DAY, year=2023)
+        aocd.submit(part_b(data_as_list), part='b', day=DAY, year=2023)
 
 if __name__ == "__main__":
     main()
