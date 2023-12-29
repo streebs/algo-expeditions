@@ -34,7 +34,7 @@ If you are using Windows, check this out: https://frankcorso.dev/setting-up-pyth
 
 
 # Advent of Code Submissions
-If you would like to verify the results of my AoC submissions, check out [aocd-config.md](https://github.com/streebs/strebe-leet/blob/main/readme.md). 
+If you would like to verify the results of my AoC submissions, check out [aocd-config.md](https://github.com/streebs/strebe-leet/blob/main/aocd-config.md). 
 To run the submissions just run a python file in aoc2023/. For example:
 
 ```sh
