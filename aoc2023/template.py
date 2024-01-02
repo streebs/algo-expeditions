@@ -24,7 +24,7 @@ class Test(unittest.TestCase):
 
 
 ############### DATA RETRIEVAL ###############
-data = aocd.get_data(day=1, year=2023)
+data = aocd.get_data(day=DAY, year=2023)
 data_as_list = data.split("\n")
 
 
