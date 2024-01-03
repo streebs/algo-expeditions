@@ -21,23 +21,19 @@ def dataToDict(data):
 
 class Map:
     def __init__(self, spec : list):
-        self.map = {}
-        # fill map according to spec from the input
-        for s in spec:
+        self.spec = spec
+
+    def __getitem__(self, key):
+        for s in self.spec:
             src = s[1]
             dest = s[0]
             rng = s[2]
 
-            for i in range(0, rng):
-                self.map[src+i] = dest+i
-
-        self.map = dict(sorted(self.map.items()))
-
-    def __getitem__(self, key):
-        if key in self.map:
-            return self.map[key]
-        else:
-            return key
+            if key >= src and key < src + rng:
+                diff = key - src
+                return dest + diff
+        
+        return key
 
 
 
@@ -60,7 +56,26 @@ def part_a(data):
 
 
 def part_b(data):
-    raise NotImplementedError
+    formattedData = dataToDict(data)
+    seed = formattedData['seeds']
+    formattedSeeds = [(seed[i], seed[(i+1)%len(seed)]) for i in range(0,len(seed),2)]
+
+    seed2soil = Map(formattedData['seed-to-soil map'])
+    soil2fert = Map(formattedData['soil-to-fertilizer map'])
+    fert2water = Map(formattedData['fertilizer-to-water map'])
+    water2light = Map(formattedData['water-to-light map'])
+    light2temp = Map(formattedData['light-to-temperature map'])
+    temp2humid = Map(formattedData['temperature-to-humidity map'])
+    humid2location = Map(formattedData['humidity-to-location map'])
+
+    locations = []
+    for f in formattedSeeds:
+        start = f[0]
+        end = f[1]
+        for i in range(start, start+end):
+            locations.append(humid2location[temp2humid[light2temp[water2light[fert2water[soil2fert[seed2soil[i]]]]]]])
+    
+    return min(locations)
 
 
 
@@ -114,7 +129,7 @@ class Test(unittest.TestCase):
         self.assertEqual(testMappage(test_data,'seed-to-soil map', 13), 13)
 
         self.assertEqual(part_a(test_data), 35)
-        # self.assertEqual(part_b(test_data), 0)
+        self.assertEqual(part_b(test_data), 46)
 
 
 ############### DATA RETRIEVAL ###############
