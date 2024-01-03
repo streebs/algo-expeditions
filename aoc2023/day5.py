@@ -1,6 +1,7 @@
 import aocd
 import unittest
 import sys
+import math
 
 # UPDATE DAY for 
 DAY = 5
@@ -68,14 +69,16 @@ def part_b(data):
     temp2humid = Map(formattedData['temperature-to-humidity map'])
     humid2location = Map(formattedData['humidity-to-location map'])
 
-    locations = []
+    smallestNum = math.inf
     for f in formattedSeeds:
         start = f[0]
         end = f[1]
         for i in range(start, start+end):
-            locations.append(humid2location[temp2humid[light2temp[water2light[fert2water[soil2fert[seed2soil[i]]]]]]])
+             t = humid2location[temp2humid[light2temp[water2light[fert2water[soil2fert[seed2soil[i]]]]]]]
+             if t < smallestNum:
+                 smallestNum = t
     
-    return min(locations)
+    return smallestNum
 
 
 
