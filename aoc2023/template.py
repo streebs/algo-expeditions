@@ -1,6 +1,7 @@
 import aocd
 import unittest
 import sys
+from missing import *
 
 # UPDATE DAY for 
 DAY = 0
@@ -24,6 +25,8 @@ class Test(unittest.TestCase):
 
 
 ############### DATA RETRIEVAL ###############
+if test_data == None or DAY == 0:
+    raise MissingFieldsError("You have not updated either `DAY`, `test_data`, or both!")
 data = aocd.get_data(day=DAY, year=2023)
 data_as_list = data.split("\n")
 
