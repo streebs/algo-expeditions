@@ -103,12 +103,6 @@ class TestPartB(unittest.TestCase):
 data = aocd.get_data(day=2, year=2023)
 data_as_list = data.split("\n")
         
-# url = 'https://adventofcode.com/2023/day/2/input'
-# cookies = {'session':'53616c7465645f5f02f46aae4bb05cb8ab6d077207b58a91998d6b6103e0b82405ecf051b5a249be678a6f0241a87c686ecd8bff6c0d6c92df8bb6d046eea358'}
-# r = requests.get(url, cookies=cookies)
-# data = r.text
-# data_as_list = data.split("\n")
-# data_as_list = data_as_list[:-1]
 
 
 
