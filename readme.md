@@ -43,3 +43,7 @@ python aoc2023/day4.py
 
 optionally there is a '-t' flag for testing submissions
 
+# Project Euler
+
+My solutions for [Project Euler](https://projecteuler.net/about) problems is located in `euler/`. Much Thought goes into these problems and I am making an effort to document my thought process in the comments at the top of each file. I find these problems really fun! I also have started development of a library called `smath`. I have included it in the `euler/` directory as it is a major work in progress. It is there to code highly reusable algorithms related to math. More to come! :) 
+
