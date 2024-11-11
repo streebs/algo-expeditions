@@ -38,21 +38,31 @@
 # multiply to get the answer
 
 import smath
+from functools import reduce
+from operator import mul
 
-def multiplyFactorSets(start, end):
-    if start > end:
-        print("enter a range from lowest to hihgest")
+def check_index(lst, index):
+    try:
+        lst[index]
+        return True
+    except IndexError:
+        return False
 
-    factor_sets = []
-    for i in range(start, end+1):
-        fac = smath.getPrimeFactors(i)
-        factor_sets.append(fac) if fac != [] else ...
-    
-    combined_set = set.union(*[x for x in factor_sets])
+def smallest_multiple(n: int):
+    factors = []
+    for i in range(2, n+1):
+        factorization = smath.factorization(i)
+        for j in factorization:
+            cnt = factors.count(j)
+            fact_cnt = factorization.count(j)
+            if fact_cnt > cnt:
+                factors.append(j)
 
-    print(combined_set)
+    return reduce(mul, factors)
 
-print(smath.factorization(8))
+
+
+print(smallest_multiple(20))
 
 
 
