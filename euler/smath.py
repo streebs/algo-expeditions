@@ -90,12 +90,16 @@ def collatz(n: int, seq=[]):
     
 
 class Graph:
-    MAX_VERTICIES = 10
-    matrix = [[] for i in range(0,MAX_VERTICIES)]
+    MAX_VERTICIES = 0
+    matrix = []
     numVerticies = 0
-    labels = ["" for i in range(0,MAX_VERTICIES)]
+    labels = []
 
-    def __init__(self):
+    def __init__(self, n: int):
+        self.MAX_VERTICIES = n**2
+        self.matrix = [[] for i in range(0,self.MAX_VERTICIES)]
+        self.numVerticies = 0
+        self. labels = ["" for i in range(0,self.MAX_VERTICIES)]
         for i in range(0, self.MAX_VERTICIES):
             for j in range(0, self.MAX_VERTICIES):
                 self.matrix[i].append(sys.maxsize)
@@ -206,6 +210,31 @@ class Graph:
                     stack.append(self.get_index(edge))
                     # history.append(self.labels[self.get_index(edge)])
         return cnt
+    
+    def find_all_paths(self, startingVertex: str):
+        '''
+        This function is specific to a square graph that has only right, and down paths. namely from project euler
+        '''
+        ## get all adjacent verticies from starting vertex
+        ## add them to the stack
+        ## while the stack is not empty
+        n = self.labels[-1]
+        cnt = 0
+        stack = []
+        for v in self.get_adjacent_verticies(self.get_index(startingVertex)):
+            stack.append(v)
+        
+        while stack:
+            nextV = stack.pop()
+
+            for v in self.get_adjacent_verticies(self.get_index(nextV)):
+                stack.append(v)
+            if nextV == n:
+                cnt += 1
+
+        return cnt
+
+        print(self.get_adjacent_verticies(self.get_index(startingVertex)))
 
     def print_graph(self):
         ## This isnt working currently :/
