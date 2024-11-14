@@ -211,19 +211,19 @@ class Graph:
                     # history.append(self.labels[self.get_index(edge)])
         return cnt
     
-    def find_all_paths(self, startingVertex: str):
+    def find_all_paths(self, startingVertex: str, rec=False):
         '''
         This function is specific to a square graph that has only right, and down paths. namely from project euler
         '''
         ## get all adjacent verticies from starting vertex
         ## add them to the stack
-        ## while the stack is not empty
         n = self.labels[-1]
         cnt = 0
         stack = []
         for v in self.get_adjacent_verticies(self.get_index(startingVertex)):
             stack.append(v)
         
+        ## while the stack is not empty
         while stack:
             nextV = stack.pop()
 
@@ -235,6 +235,15 @@ class Graph:
         return cnt
 
         print(self.get_adjacent_verticies(self.get_index(startingVertex)))
+    
+    def find_all_paths_rec(self, startingVertex: str):
+        if startingVertex == self.labels[-1]:
+            return 1
+        v = self.get_adjacent_verticies(self.get_index(startingVertex))
+        x = 0
+        for i in self.get_adjacent_verticies(self.get_index(startingVertex)):
+            x += self.find_all_paths_rec(i)
+        return x
 
     def print_graph(self):
         ## This isnt working currently :/

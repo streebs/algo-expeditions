@@ -1,5 +1,5 @@
 from smath import Graph
-
+import time
 
 # g = Graph()
 
@@ -46,7 +46,7 @@ from smath import Graph
 # print("----------------------------------------")
 # print()
 
-def lattice_paths(n: int):
+def lattice_paths(n: int, rec=False):
     # build the graph
     g = Graph(n)
 
@@ -67,10 +67,31 @@ def lattice_paths(n: int):
             g.add_egde(str(i), str(i+n), 1)
     #g.print_graph()
     
-    return g.find_all_paths("1")
+    return g.find_all_paths_rec("1") if rec else g.find_all_paths("1")
 
 
-print(lattice_paths(20))
+print("iterative Tests-------------------------------")
+node_test = [2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+# node_test = [16]
+for i in node_test:
+    t1 = time.time()
+    c1 = lattice_paths(i)
+    t2 = time.time()
+
+    print(f"{i} x {i} has {c1} paths and took {t2-t1}")
+
+print("Recursive Tests-------------------------------")
+node_test = [2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+# node_test = [16]
+for i in node_test:
+    t1 = time.time()
+    c1 = lattice_paths(i, True)
+    t2 = time.time()
+
+    print(f"{i} x {i} has {c1} paths and took {t2-t1}")
+
+# according to exponential interpolation the time it take for this function to process depending on n is:
+# 2.06551*10^-7e^(1.48869x) <- pretty accurate too!
 
 
 
