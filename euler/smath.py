@@ -236,10 +236,12 @@ class Graph:
 
         print(self.get_adjacent_verticies(self.get_index(startingVertex)))
     
-    def find_all_paths_rec(self, startingVertex: str):
+    def find_all_paths_rec(self, startingVertex: str, previous={}):
         if startingVertex == self.labels[-1]:
             return 1
-        v = self.get_adjacent_verticies(self.get_index(startingVertex))
+        if startingVertex in previous:
+            return previous[startingVertex]
+        
         x = 0
         for i in self.get_adjacent_verticies(self.get_index(startingVertex)):
             x += self.find_all_paths_rec(i)
