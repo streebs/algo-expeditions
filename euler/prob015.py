@@ -1,6 +1,8 @@
 from smath import Graph
 import time
 
+# according to exponential interpolation the time it take for this function to process depending on n is:
+# 2.06551*10^-7e^(1.48869x) <- pretty accurate too!
 
 
 # def lattice_paths(n: int, rec=False):
