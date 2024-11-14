@@ -102,7 +102,7 @@ class Graph:
         self. labels = ["" for i in range(0,self.MAX_VERTICIES)]
         for i in range(0, self.MAX_VERTICIES):
             for j in range(0, self.MAX_VERTICIES):
-                self.matrix[i].append(sys.maxsize)
+                self.matrix[i].append(0)
 
         self.numVerticies = 0
 
