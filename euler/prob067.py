@@ -1,8 +1,6 @@
-'''
-This problem is really cool! I am going to make a binary tree and fill it will all the numbers
-then all I need to do is find the child with the maximum value and visit it!
-using the visitor pattern baby!
-'''
+import os
+
+
 # for type hinting
 class Node:
     num = None
@@ -62,39 +60,7 @@ class Node:
         return str(self.num)
     def __repr__(self):
         return str(self.num)
-
-test_data = [
-    [3],
-    [7,4],
-    [2,4,6],
-    [8,5,9,3]
-]
-
-ex1 = [
-    [3],
-    [7,4],
-    [2,4,8],
-    [8,5,9,3]
-]
     
-data = [
-    [75],
-    [95, 64],
-    [17, 47, 82],
-    [18, 35, 87, 10],
-    [20, 4, 82, 47, 65],
-    [19, 1, 23, 75, 3, 34],
-    [88, 2, 77, 73, 7, 63, 67],
-    [99, 65, 4, 28, 6, 16, 70, 92],
-    [41, 41, 26, 56, 83, 40, 80, 70, 33],
-    [41, 48, 72, 33, 47, 32, 37, 16, 94, 29],
-    [53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14],
-    [70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57],
-    [91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48],
-    [63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
-    [4, 62,98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23]
-]
-
 def build_tree(data, i=0, j=0):
     if i > len(data) - 2:
         return Node(data[i][j], [])
@@ -110,25 +76,26 @@ def execute(tree: Node, visitor: AddVisitor, accept=True):
         tree.look_ahead_accept(visitor)
         print(f"path: {visitor.nums}")
         print(f"total: {visitor.getSum()}")
+    
+
+def get_input():
+    path = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname('euler/inputs/67_triangle.txt')))
+    # print(path)
+    with open(os.path.join(path, '67_triangle.txt'), 'r') as data:
+        list_of_strings = data.readlines()
+        for i in range(len(list_of_strings)):
+            list_of_strings[i] = [x.strip() for x in list_of_strings[i].split()]
+            list_of_strings[i] = [int(x) for x in list_of_strings[i]]
+
+    return list_of_strings
 
 
 def max_path():
-    
-    test_visitor = AddVisitor()
-    ex1_visitor = AddVisitor()
+    data = get_input()
+    problem_tree = build_tree(data)
     problem_visitor = AddVisitor()
 
-    test_tree = build_tree(test_data)
-    ex1_tree = build_tree(ex1)
-    problem_tree = build_tree(data)
-
-    print('test data -------------')
-    execute(test_tree, test_visitor, False)
-
-    print('ex1 data  -------------')
-    execute(ex1_tree, ex1_visitor, False)
-
-    print('problem data ----------')
+    print('problem data ----------------------------')
     execute(problem_tree, problem_visitor, False)
 
 max_path()
