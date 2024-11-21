@@ -61,10 +61,11 @@ class Node:
     def __repr__(self):
         return str(self.num)
     
-def build_tree(data, i=0, j=0):
+def build_tree_rec(data, i=0, j=0):
     if i > len(data) - 2:
         return Node(data[i][j], [])
-    return Node(data[i][j], [build_tree(data, i+1,j), build_tree(data, i+1,j+1)])
+    return Node(data[i][j], [build_tree_rec(data, i+1,j), build_tree_rec(data, i+1,j+1)])
+
     
 
 def execute(tree: Node, visitor: AddVisitor, accept=True):
@@ -92,7 +93,7 @@ def get_input():
 
 def max_path():
     data = get_input()
-    problem_tree = build_tree(data)
+    problem_tree = build_tree_rec(data)
     problem_visitor = AddVisitor()
 
     print('problem data ----------------------------')
