@@ -25,43 +25,43 @@ def isPrime(n: int) -> bool:
 
     return True 
 
+def prime_factorization(n: int):
+    if isPrime(n):
+        return [n]
+    # find 2 facors of n and recurse
+    a = 0
+    b = 0
+    for i in range(2, n):
+        if n % i == 0:
+            a = i
+            b = int(n / a)
+            break
+    return prime_factorization(a) + prime_factorization(b)
 
-def factorization(n : int, prime=True) -> list:
+
+def factorization(n : int, proper=False) -> list:
     '''
     Factor an integer
     ### Arguments
     **n**: positive integer<br>
-    **prime**(opt): get prime factorization | Default: True<br>
-    **recur**(opt): use recursive algorithm | Default: True<br>
+    **proper**(opt): returns proper devisors less than n | Default: False<br>
 
     ### Return
     list of factors
     '''
-    if prime:
-        # if n is prime return n
-        if isPrime(n):
-            return [n]
-        # find 2 facors of n and recurse
-        a = 0
-        b = 0
-        for i in range(2, n):
-            if n % i == 0:
-                a = i
-                b = int(n / a)
-                break
-        return factorization(a) + factorization(b)
     
-    if not prime:
-        a = 0
-        b = 0
-        factors = set()
-        for i in range(1, math.floor(n**.5)):
-            if n % i == 0:
-                a = i
-                b = int(n / a)
-                factors.add(a)
-                factors.add(b)
-        return list(factors)
+    a = 0
+    b = 0
+    factors = set()
+    for i in range(1, math.floor(n**.5)):
+        if n % i == 0:
+            a = i
+            b = int(n / a)
+            factors.add(a)
+            factors.add(b)
+    factors = list(factors)
+
+    return factors[:-1] if proper else factors
 
 def linear_regression(x_vec: list, y_vec: list, y):
     n = len(x_vec)

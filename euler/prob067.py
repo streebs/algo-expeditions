@@ -66,7 +66,37 @@ def build_tree_rec(data, i=0, j=0):
         return Node(data[i][j], [])
     return Node(data[i][j], [build_tree_rec(data, i+1,j), build_tree_rec(data, i+1,j+1)])
 
+test_data = [
+    [3],
+    [7,4],
+    [2,4,6],
+    [8,5,9,3]
+]
+
+ex1 = [
+    [3],
+    [7,4],
+    [2,4,8],
+    [8,5,9,3]
+]
     
+ex2 = [
+    [75],
+    [95, 64],
+    [17, 47, 82],
+    [18, 35, 87, 10],
+    [20, 4, 82, 47, 65],
+    [19, 1, 23, 75, 3, 34],
+    [88, 2, 77, 73, 7, 63, 67],
+    [99, 65, 4, 28, 6, 16, 70, 92],
+    [41, 41, 26, 56, 83, 40, 80, 70, 33],
+    [41, 48, 72, 33, 47, 32, 37, 16, 94, 29],
+    [53, 71, 44, 65, 25, 43, 91, 52, 97, 51, 14],
+    [70, 11, 33, 28, 77, 73, 17, 78, 39, 68, 17, 57],
+    [91, 71, 52, 38, 17, 14, 91, 43, 58, 50, 27, 29, 48],
+    [63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
+    [4, 62,98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23]
+]  
 
 def execute(tree: Node, visitor: AddVisitor, accept=True):
     if accept:
@@ -90,14 +120,50 @@ def get_input():
 
     return list_of_strings
 
+# does not work for a large triangle. as there are so many options
+def look_ahead(data: list, i=0, j=0, path:list=[]):
+    path.append(data[i][j])
+
+    if i == len(data) - 1: # this is on the last row
+        return
+    
+    elif i == len(data) - 2: # no grand children
+        options = {}
+        options['l'] = data[i+1][j]
+        options['r'] = data[i+1][j+1]
+
+        m = max(options, key=options.get)
+
+        if m == 'l':
+            look_ahead(data, i+1, j, path)
+        if m == 'r':
+            look_ahead(data, i+1, j+1, path)    
+    # if i == len(data) - 3: # this is the last row that has grand children
+        # ...
+    else:
+        options = {}
+        options['ll'] = data[i+1][j] + data[i+2][j]
+        options['lr'] = data[i+1][j] + data[i+2][j+1]
+        options['rl'] = data[i+1][j+1] + data[i+2][j+1]
+        options['rr'] = data[i+1][j+1] + data[i+2][j+2]
+
+        m = max(options, key=options.get)
+
+        if m == 'll' or m == 'lr':
+            look_ahead(data, i+1, j, path)
+        if m == 'rl' or m == 'rr':
+            look_ahead(data, i+1, j+1, path)
+
+    return path
+        
+
 
 def max_path():
     data = get_input()
-    problem_tree = build_tree_rec(data)
-    problem_visitor = AddVisitor()
+    path = look_ahead(data)
+    print(f"path: {path}")
+    print(f"sum: {sum(path)}")
 
-    print('problem data ----------------------------')
-    execute(problem_tree, problem_visitor, False)
 
 max_path()
 
