@@ -1,0 +1,2 @@
+class MissingFieldsError(Exception):
+    pass
