@@ -49,19 +49,29 @@ def factorization(n : int, proper=False) -> list:
     ### Return
     list of factors
     '''
+    if n == 1 and proper:
+        return []
+    if n == 1:
+        return [1]
+    # if n == 2 and proper:
+    #     return [1]
+    # if n == 2:
+    #     return [1,2]
     
     a = 0
     b = 0
     factors = set()
-    for i in range(1, math.floor(n**.5)):
+    for i in range(1, math.ceil(n**.5)):
         if n % i == 0:
             a = i
             b = int(n / a)
             factors.add(a)
             factors.add(b)
-    factors = list(factors)
+    factors = sorted(list(factors))
+    if proper:
+        factors.pop()
 
-    return factors[:-1] if proper else factors
+    return factors
 
 def linear_regression(x_vec: list, y_vec: list, y):
     n = len(x_vec)
