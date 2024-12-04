@@ -3,18 +3,29 @@ import unittest
 import sys
 from missing import *
 
+import re
 # UPDATE THESE BASED ON DAY AND DATA FROM ADVENT OF CODE 
-DAY = None
+DAY = 3
 YEAR = 2024
-TEST_DATA = None
-TEST_A_ANSWER = 0
+TEST_DATA = [
+    "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
+]
+TEST_A_ANSWER = 161
 TEST_B_ANSWER = 0
 
 
-
 def part_a(data):
-    ### *** your code here *** ###
-    raise NotImplementedError
+    pattern = r'mul\([0-9]{1,3},[0-9]{1,3}\)'
+    products = []
+    for line in data:
+        valid_muls = re.findall(pattern, line)
+        for mul in valid_muls:
+            mul = mul[4:]
+            mul = mul[:-1]
+            nums = mul.split(',')
+            products.append(int(nums[0]) * int(nums[1]))
+    
+    return sum(products)
 
 
 def part_b(data):
@@ -61,6 +72,7 @@ def main():
         print()
 
         # do any debugging code here :)
+        part_a(TEST_DATA)
         
         print()
         print("----------END DEBUGGING-----------")
