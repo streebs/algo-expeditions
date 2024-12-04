@@ -10,8 +10,11 @@ YEAR = 2024
 TEST_DATA = [
     "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
 ]
+TEST_DATA_B = [
+    "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
+]
 TEST_A_ANSWER = 161
-TEST_B_ANSWER = 0
+TEST_B_ANSWER = 48
 
 
 def part_a(data):
@@ -29,8 +32,24 @@ def part_a(data):
 
 
 def part_b(data):
-    ### *** your code here *** ###
-    raise NotImplementedError
+    pattern = r"mul\([0-9]{1,3},[0-9]{1,3}\)|do\(\)|don't\(\)"
+    products = []
+    state = True
+    for line in data:
+        valid_muls = re.findall(pattern, line)
+        for mul in valid_muls:
+            if mul == 'do()':
+                state = True
+            if mul == "don't()":
+                state = False
+            if mul != 'do()' and mul != "don't()" and state:
+                mul = mul[4:]
+                mul = mul[:-1]
+                nums = mul.split(',')
+                products.append(int(nums[0]) * int(nums[1]))
+    
+    return sum(products)
+
 
 
 
@@ -72,7 +91,7 @@ def main():
         print()
 
         # do any debugging code here :)
-        part_a(TEST_DATA)
+        print(part_b(TEST_DATA_B))
         
         print()
         print("----------END DEBUGGING-----------")
