@@ -1,4 +1,4 @@
-import smath
+import smath.smath as smath
 
 
 def sum_square_difference(limit: int):

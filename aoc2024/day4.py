@@ -4,7 +4,7 @@ import sys
 import regex as re
 from missing import *
 
-import smath.matrix
+from smath.matrix import matrix, I
 
 # UPDATE THESE BASED ON DAY AND DATA FROM ADVENT OF CODE 
 DAY = 4
@@ -22,91 +22,63 @@ TEST_DATA = [
     "MXMXAXMASX"
 ]
 TEST_A_ANSWER = 18
-TEST_B_ANSWER = 0
+TEST_B_ANSWER = 9
 
 
 
 def part_a(data):
-    pattern = r'XMAS|MASX'
+    pattern = r'XMAS|SAMX'
 
     # find all horizontal
+    horizontal_matches = []
     for line in data:
-        matches = re.findall(pattern, line, overlapped=True)
+        horizontal_matches += re.findall(pattern, line, overlapped=True)
     
-    print(matches)
     # find all verticals
-
-    # find all diagonals
+    for i in range(len(data)):
+        data[i] = list(data[i])
     
-    # for i in range(len(data)):
-    #     data[i] = [c for c in data[i]]
+    A = matrix(data)
+    transposed = A.transpose()
+    data = transposed.values
 
-    # possibles = ["XMAS", "SAMX"]
+    # put the strings back to gether
+    for i in range(len(data)):
+        data[i] = "".join(data[i])
+    vertical_matches = []
+    for line in data:
+        vertical_matches += re.findall(pattern, line, overlapped=True)
 
-    # horizontal_2 = ''
-    # horizontal_3 = ''
-    # horizontal_4 = ''
-    # vertical_2 = ''
-    # vertical_3 = ''
-    # vertical_4 = ''
+    possibles = ["XMAS", "SAMX"]
 
-    # cnt = 0
-    # for i in range(0,len(data)-3):
-    #     for j in range(0,len(data[i])-3):
+    cnt = 0
+    for i in range(0,len(data)-3):
+        for j in range(0,len(data[i])-3):
 
-        
+            lr_diagonal = data[i][j]+data[i+1][j+1]+data[i+2][j+2]+data[i+3][j+3]
+            rl_diagonal = data[i][j+3]+data[i+1][j+2]+data[i+2][j+1]+data[i+3][j]
 
-    #         horizontal_1 = data[i][j]+data[i][j+1]+data[i][j+2]+data[i][j+3]
-    #         vertical_1 = data[i][j]+data[i+1][j]+data[i+2][j]+data[i+3][j]
+            if lr_diagonal in possibles:
+                cnt += 1
+            if rl_diagonal in possibles:
+                cnt += 1
 
-    #         if j == len(data[i]) - 4:
-    #             horizontal_2 = data[i+1][j]+data[i+1][j+1]+data[i+1][j+2]+data[i+1][j+3]
-    #             horizontal_3 = data[i+2][j]+data[i+2][j+1]+data[i+2][j+2]+data[i+2][j+3]
-    #             # horizontal_4 = data[i+3][j]+data[i+3][j+1]+data[i+3][j+2]+data[i+3][j+3]
-    #             vertical_4 = data[i][j+3]+data[i+1][j+3]+data[i+2][j+3]+data[i+3][j+3]
-    #         if i == len(data) - 4:
-    #             vertical_2 = data[i][j+1]+data[i+1][j+1]+data[i+2][j+1]+data[i+3][j+1]
-    #             vertical_3 = data[i][j+2]+data[i+1][j+2]+data[i+2][j+2]+data[i+3][j+2]
-    #             # vertical_4 = data[i][j+3]+data[i+1][j+3]+data[i+2][j+3]+data[i+3][j+3]
-    #             horizontal_4 = data[i+3][j]+data[i+3][j+1]+data[i+3][j+2]+data[i+3][j+3]
-
-    #         lr_diagonal = data[i][j]+data[i+1][j+1]+data[i+2][j+2]+data[i+3][j+3]
-    #         rl_diagonal = data[i][j+3]+data[i+1][j+2]+data[i+2][j+1]+data[i+3][j]
-
-    #         if horizontal_1 in possibles:
-    #             cnt += 1
-    #         if horizontal_2 in possibles:
-    #             horizontal_2 = ''
-    #             cnt += 1
-    #         if horizontal_3 in possibles:
-    #             horizontal_3 = ''
-    #             cnt += 1
-    #         if horizontal_4 in possibles:
-    #             horizontal_4 = ''
-    #             cnt += 1
-
-    #         if vertical_1 in possibles:
-    #             cnt +=1
-    #         if vertical_2 in possibles:
-    #             vertical_2 = ''
-    #             cnt +=1
-    #         if vertical_3 in possibles:
-    #             vertical_3 = ''
-    #             cnt +=1
-    #         if vertical_4 in possibles:
-    #             vertical_4 = ''
-    #             cnt +=1
-
-    #         if lr_diagonal in possibles:
-    #             cnt += 1
-    #         if rl_diagonal in possibles:
-    #             cnt += 1
-    # return cnt
+    return cnt + len(vertical_matches) + len(horizontal_matches)
 
 
 def part_b(data):
-    ### *** your code here *** ###
-    raise NotImplementedError
+    cnt = 0
+
+    for i in range(len(data)-2):
+        for j in range(len(data)-2):
+            serial_f = "SSAMM"
+            serial_b = "MMASS"
+            serial_ld = "MSAMS"
+            serial_rd = "SMASM"
+            value_from_square = data[i][j]+data[i][j+2]+data[i+1][j+1]+data[i+2][j]+data[i+2][j+2]
+            if value_from_square == serial_f or value_from_square == serial_b or value_from_square == serial_ld or value_from_square == serial_rd:
+                cnt += 1
+    return cnt
 
 
 
@@ -148,7 +120,7 @@ def main():
         print()
 
         # do any debugging code here :)
-        part_a(TEST_DATA)
+        part_b(TEST_DATA)
         
         print()
         print("----------END DEBUGGING-----------")

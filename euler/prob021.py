@@ -1,4 +1,4 @@
-import smath
+import smath.smath as smath
 
 def d(n: int):
     return sum(smath.factorization(n, True))

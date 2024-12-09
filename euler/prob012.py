@@ -1,6 +1,6 @@
 # for this one I know it will be far down the number line before we are even close to 500 factors
 # I am gonna try to use extrapolation to get a good guess where that might begin to save some compute cycles
-import smath
+import smath.smath as smath
 import time
 
 # gonna use the factorization function to estimate when numbers start to have more than 500 factors

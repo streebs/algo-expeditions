@@ -1,0 +1,8 @@
+setup.py
+smath/__init__.py
+smath/exceptions.py
+smath/matrix.py
+smath.egg-info/PKG-INFO
+smath.egg-info/SOURCES.txt
+smath.egg-info/dependency_links.txt
+smath.egg-info/top_level.txt

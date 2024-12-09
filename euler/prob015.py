@@ -1,4 +1,4 @@
-from smath import Graph
+from smath.smath import Graph
 import time
 import sys
 

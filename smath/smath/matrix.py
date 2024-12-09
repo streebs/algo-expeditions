@@ -52,7 +52,7 @@ class matrix:
     
     def __mul__(self, other):
         if self.cols != other.rows:
-            raise Exception(f"Error! Invalid multiplication. Left column must match right rows")
+            raise Exception(f"Error! Invalid multiplication. Left columns must match right rows")
         
         newValues = matrix([[0 for col in range(self.cols)] for i in range(self.rows)])
 
@@ -64,15 +64,15 @@ class matrix:
     
 
     def transpose(self):
+        newValues = [[self.values[row][i] for row in range(self.rows)] for i in range(self.cols)]
+        return matrix(newValues)
 
-        newValues = [[0 for row in range(self.rows)] for i in range(self.cols)]
+def I(n:int):
+    values = [[0 for _ in range(n)] for _ in range(n)]
 
-        return newValues
-
-
-        
-m = matrix([[1,2,3],[1,2,3]])
-n = matrix([[1,1],[2,2],[3,3]])
-
-m.transpose()
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                values[i][j] = 1
+    return matrix(values)
 

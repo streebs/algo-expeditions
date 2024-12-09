@@ -1,4 +1,4 @@
-import smath
+import smath.smath as smath
 from functools import reduce
 from operator import mul
 

@@ -37,7 +37,7 @@
 # then the remaining numbers from each column with the repeats removed will be factors of the answer
 # multiply to get the answer
 
-import smath
+import smath as smath
 from functools import reduce
 from operator import mul
 

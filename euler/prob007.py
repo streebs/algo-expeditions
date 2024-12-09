@@ -1,7 +1,7 @@
 
 
 
-import smath
+import smath.smath as smath
 
 def nth_prime(n: int):
     cnt = 1
