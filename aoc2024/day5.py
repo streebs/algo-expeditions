@@ -37,7 +37,7 @@ TEST_DATA = [
     "97,13,75,29,47",
 ]
 TEST_A_ANSWER = 143
-TEST_B_ANSWER = 0
+TEST_B_ANSWER = 123
 
 class Manual:
     def __init__(self, input: list[str]):
@@ -88,14 +88,18 @@ class Manual:
                 after_index = line.index(after)
 
                 line[before_index], line[after_index] = line[after_index], line[before_index]
-                self.incorrect.append(line[len(line)//2])
-                return
+        if self.check_rules(line):
+            self.incorrect.append(line[len(line)//2])
+        else:
+            self.fix_incorrect(line)
+                
 
     
     def sum_of_incorrect(self):
         passed = []
         for line in self.pages:
-            self.fix_incorrect(line)
+            if not self.check_rules(line):
+                self.fix_incorrect(line)
 
         return sum(self.incorrect)
 
