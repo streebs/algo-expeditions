@@ -19,7 +19,7 @@ TEST_DATA = [
     "......#...",
 ]
 TEST_A_ANSWER = 41
-TEST_B_ANSWER = 0
+TEST_B_ANSWER = 6
 
 class Map:
     def __init__(self, data):
@@ -60,16 +60,16 @@ class Player:
         y = self.position[1]
         next_pos = None
         match self.direction:
-            case 0:
-                x += 1
-                next_pos = (x,y)
-            case 1:
-                y += 1
-                next_pos = (x,y)
-            case 2:
+            case 0: # north
                 x -= 1
                 next_pos = (x,y)
-            case 3:
+            case 1: # east
+                y += 1
+                next_pos = (x,y)
+            case 2: # south
+                x += 1
+                next_pos = (x,y)
+            case 3: # west
                 y -= 1
                 next_pos = (x,y)
         return next_pos
@@ -79,16 +79,16 @@ class Player:
         x = self.position[0]
         y = self.position[1] 
         match self.direction:
-            case 0:
-                x += 1
-                self.position = (x,y)
-            case 1:
-                y += 1
-                self.position = (x,y)
-            case 2:
+            case 0: # north
                 x -= 1
                 self.position = (x,y)
-            case 3:
+            case 1: # east
+                y += 1
+                self.position = (x,y)
+            case 2: # south
+                x += 1
+                self.position = (x,y)
+            case 3: # west
                 y -= 1
                 self.position = (x,y)
 
@@ -103,12 +103,13 @@ def part_a(data):
 
     while p1.position[0] <= map.x_limit and p1.position[1] <= map.y_limit:
         # record the players current position
-        p1.past_locations.append(p1.position)
+        if p1.position not in p1.past_locations:
+            p1.past_locations.append(p1.position)
         if map.is_barrier(p1.get_next_pos()):
             p1.turn_right()
         else:
             p1.move()
-    cnt = len(p1.past_locations)
+    cnt = len(p1.past_locations) - 1 # the past locations includes the space outside the map
     print(cnt)
     return cnt
 
@@ -116,8 +117,15 @@ def part_a(data):
 
 
 def part_b(data):
-    ### *** your code here *** ###
-    raise NotImplementedError
+    map = Map(data)
+    p1 = Player(map.get_player_position())
+
+    for i in range(len(data)):
+        for j in range(len(data[i])):
+            ...
+
+    while p1.position[0] <= map.x_limit and p1.position[1] <= map.y_limit:
+        ...
 
 
 
