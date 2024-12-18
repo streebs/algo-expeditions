@@ -2,6 +2,7 @@ import aocd
 import unittest
 import sys
 from missing import *
+import copy
 
 # UPDATE THESE BASED ON DAY AND DATA FROM ADVENT OF CODE 
 DAY = 6
@@ -35,7 +36,7 @@ class Map:
         self.y_limit = len(data[0])
 
     def is_barrier(self, coords:tuple):
-        if coords[0] >= self.x_limit or coords[1] >= self.y_limit:
+        if (coords[0] >= self.x_limit) or (coords[0] < 0) or (coords[1] >= self.y_limit) or (coords[1] < 0):
             return False
         if self.barriers[coords]:
             return True
@@ -54,6 +55,7 @@ class Player:
         self.direction = 0 # 0: north, 1: east, 2: south, 3: west
         self.position = pos # should be a tuple
         self.past_locations = [] # list of position tuples
+        self.num_moves = 0
 
     def get_next_pos(self):
         x = self.position[0]
@@ -77,7 +79,8 @@ class Player:
 
     def move(self):
         x = self.position[0]
-        y = self.position[1] 
+        y = self.position[1]
+        self.num_moves += 1
         match self.direction:
             case 0: # north
                 x -= 1
@@ -91,6 +94,10 @@ class Player:
             case 3: # west
                 y -= 1
                 self.position = (x,y)
+        if self.num_moves > 10000: # this probably means its in a loop ¯\_(ツ)_/¯
+            self.position = (10000,10000)
+            # print("loop detected")
+            return True
 
     def turn_right(self):
         self.direction = (self.direction + 1) % 4
@@ -117,15 +124,32 @@ def part_a(data):
 
 
 def part_b(data):
-    map = Map(data)
-    p1 = Player(map.get_player_position())
-
+    
+    cnt = 0
+    # go through every iteration
     for i in range(len(data)):
-        for j in range(len(data[i])):
-            ...
+        for j in range(len(data[0])):
+            new_data = copy.deepcopy(data)
+            if new_data[i][j] == '^':
+                continue
+            if new_data[i][j] != '#':
+                new_data[i] = new_data[i][:j] + '#' + new_data[i][j+1:]
+            map = Map(new_data)
+            p1 = Player(map.get_player_position())
 
-    while p1.position[0] <= map.x_limit and p1.position[1] <= map.y_limit:
-        ...
+            while p1.position[0] <= map.x_limit and p1.position[0] >= 0 and p1.position[1] <= map.y_limit and p1.position[1] >= 0:
+                # record the players current position
+                if p1.position not in p1.past_locations:
+                    p1.past_locations.append(p1.position)
+                if map.is_barrier(p1.get_next_pos()):
+                    p1.turn_right()
+                else:
+                    l = p1.move()
+                    if l:
+                        cnt += 1
+
+    return cnt
+            
 
 
 
@@ -167,7 +191,7 @@ def main():
         print()
 
         # do any debugging code here :)
-        part_a(TEST_DATA)
+        part_b(TEST_DATA)
         
         print()
         print("----------END DEBUGGING-----------")
