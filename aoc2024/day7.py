@@ -19,21 +19,30 @@ TEST_DATA = [
 ]
 TEST_A_ANSWER = 3749
 TEST_B_ANSWER = 0
+# 9160: 5 209 15 8 5
 
+def perm(total, l:list, index=0):
+    if l[len(l)-1] == l[index] and l[index] == total:
+        return l[index]
+
+    v1 = l[index]
+    v2 = l[index]
+
+    if l[index] * perm(total, l, index+1) == total:
+        return l[index]
+    if l[index] + perm(total, l, index+1) == total:
+        return l[index]
+
+    return perm(total, l, index+1)
 
 
 def part_a(data):
-    total = 190
-    nums = [10, 19]
+    total = 292
+    nums = [11, 6, 16, 20]
 
-    if len(nums) <= 2:
-        return # TODO
+    print(perm(total, nums))
 
-    combined = 0
-    for i in range(len(nums)-1):
-        if total % (nums[i] * nums[i+1]) == 0:
-            print("*")
-            combined = nums[i] * nums[i+1]
+
 
 
 def part_b(data):
@@ -80,6 +89,7 @@ def main():
         print()
 
         # do any debugging code here :)
+        part_a(TEST_DATA)
         
         print()
         print("----------END DEBUGGING-----------")
