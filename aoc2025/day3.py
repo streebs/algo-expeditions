@@ -2,54 +2,45 @@ import aocd
 import unittest
 import sys
 from missing import *
-import math
 
 # UPDATE THESE BASED ON DAY AND DATA FROM ADVENT OF CODE 
-DAY = 2
+DAY = 3
 YEAR = 2025
-TEST_RAW = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"
-TEST_DATA_RANGES = TEST_RAW.split(",")
-TEST_DATA = [(int(value.split("-")[0]), int(value.split("-")[1])) for value in TEST_DATA_RANGES]
-TEST_A_ANSWER = 1227775554
-TEST_B_ANSWER = 4174379265
+TEST_DATA = [
+    "987654321111111",
+    "811111111111119",
+    "234234234234278",
+    "818181911112111"
+]
+TEST_A_ANSWER = 357
+TEST_B_ANSWER = 0
 
-digits_and_divisors = {2:11, 4:101, 6:1_001, 8:10_001, 10:100_001, 12:1_000_001}
-digits_and_divisors_2 = {2:11, 4:101, 6:10_101, 8:1_010_101, 10:101_010_101, 12:10_101_010_101}
-composite_odds_and_divisors = {9:1_001_001, 15:1_001_001_001_001}
-small_primes = [2,3,5,7,11,13]
+
 
 def part_a(data):
-    ### *** your code here *** ###
     total = 0
-    for interval in data:
-        start = interval[0]
-        end = interval[1]
-        for i in range(start, end+1):
-            if (len(str(i)) % 2 != 0):
-                continue
-            if (i % digits_and_divisors[len(str(i))] == 0):
-                total += i
+    for bank in data:
+        nums = [int(n) for n in bank]
+
+        max_1 = max(nums)
+        index_1 = nums.index(max_1)
+        nums.pop(index_1)
+
+        max_2 = max(nums)
+        index_2 = nums.index(max_2)
+        nums.pop(index_2)
+        config_1 = int(str(max_1)+str(max_2))
+        config_2 = int(str(max_2)+str(max_1))
+        if config_1 > config_2:
+            total += config_1
+        else:
+            total += config_2
     return total
 
 
 def part_b(data):
-    total = 0
-    for interval in data:
-        start = interval[0]
-        end = interval[1]
-        for i in range(start, end+1):
-            num_digits = len(str(i))
-            if num_digits in small_primes and str(i) == str(i)[0]*num_digits:
-                total += i
-                continue
-            if (num_digits == 9 or num_digits == 15) and (i % composite_odds_and_divisors[num_digits] == 0): # composite odd numbers (should only need 9 and 15 for current dataset)
-                total += i
-                continue
-            if num_digits % 2 == 0 and (i % digits_and_divisors[num_digits] == 0 or i % digits_and_divisors_2[num_digits] == 0):
-                total += i
-
-    return total
-
+    ### *** your code here *** ###
+    raise NotImplementedError
 
 
 
@@ -66,8 +57,7 @@ class Test(unittest.TestCase):
 if TEST_DATA == None or DAY == None:
     raise MissingFieldsError("Missing puzzle data! make sure you have updated the following: `DAY`, `TEST_DATA`, `TEST_A_DATA`, `TEST_B_DATA`")
 data = aocd.get_data(day=DAY, year=YEAR)
-ranges_as_list = data.split(",")
-data_as_list = [(int(value.split("-")[0]), int(value.split("-")[1])) for value in ranges_as_list]
+data_as_list = data.split("\n")
 
 
 def main():
@@ -91,7 +81,7 @@ def main():
         print("-------BEGIN DEBUGGING MODE-------")
         print()
 
-        print(data_as_list)
+        # do any debugging code here :)
         
         print()
         print("----------END DEBUGGING-----------")
